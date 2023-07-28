@@ -1,0 +1,139 @@
+{% extends 'blog/base.html' %}
+{% block title %}Posts - Learnify{% endblock %}
+{% block content %}
+{% load static %}
+<!-- navbar -->
+<header>
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+    </div>
+    <input type="checkbox" id="nav_check" hidden>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+        </div>
+        <ul>
+            <li><a href="{% url 'home'%}">Home</a></li>
+            <li><a href="{% url 'add-post'%}">Post something</a></li>
+            <li><a href="{% url 'contact_us'%}">Contact Us</a></li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+        </ul>
+    </nav>
+    <label for="nav_check" class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </label>
+</header>
+<section id="blog">
+    <div class="blog_heading">
+        <h3>Posts</h3>
+        <form method="GET" style="width: 100%; display: flex; justify-content: space-between;">
+            <input type="text" name="q" placeholder="Search your Question...">
+            <button type="submit" id="submit">Search</button>
+        </form>
+    </div>
+    <div class="blog_container">
+        {% for post in object_list %}
+            <div class="blog_box">
+                <div class="blog_img">
+                    {% if post.img %}
+                    <a href="{% url 'article-detail' post.pk %}"><img src="{{ post.img.url }}"></a>
+                    {% endif %}
+                </div>
+                <div class="blog_text">
+                    <span>{{ post.date_created }} / {{ post.author }}</span>
+                    <p class="blog_title">{{ post.title }}</p>
+                    <a href="{% url 'article-detail' post.pk %}">Read More</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if object_list.count == 0 and request.GET.q %}
+    <div class="term" style="height: 40vh;">
+            <p class="centered-text">No search results found for "{{ request.GET.q }}".</p>
+    </div> 
+    {% endif %}
+    
+
+</section>
+{% include 'blog/footer.html' %}
+<!-- for styling -->
+<style>
+    .term {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+    .blog_heading{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    }
+    .blog_heading h3{
+    flex: 1;
+    }
+    .blog_heading form{
+    flex: 1;
+    text-align: right;
+    }
+.blog_img img:hover{
+    transform: scale(1.1);
+}
+    nav ul li a {
+    color: #000;
+    display: block;
+    margin: 0 2px;
+    font-weight: 600;
+    padding: 8px 18px;
+    transition: 0.2s;
+    border-radius: 30px;
+    list-style: none;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    background: rgb(17, 107, 143);
+    color: #fff;
+}
+.hamburger div {
+    width: 30px;
+    height: 2px;
+    margin: 6px 0;
+    background: #000;
+}
+#submit{
+    height: 45px;
+    font-size: 15px;
+    padding: 5px 0;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    width: 20%;
+    background: rgb(17, 107, 143);
+    color: #fff;
+    transition: 0.3s ease;
+    margin-left: 10px;
+}
+#submit:hover{
+  background: rgba(17, 107, 143, 0.877);
+  transform: scale(1.1);
+}
+@media only screen and (max-width:600px) {
+    #submit{
+        min-width: 35%;
+    }
+    input[type="text"]{
+        min-width: 70%;
+    }
+    .blog_heading h3{
+    flex: 0.5;
+    }
+    .blog_heading form{
+    flex: 1.1;
+    }
+}
+</style>
+{% endblock %}

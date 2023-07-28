@@ -1,0 +1,50 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+{% include 'blog/navbar.html'%}
+
+<section class="sec1">
+    <div class="video-container">
+        <video id="video-bg" autoplay muted loop style="filter: brightness(50%);">
+            <source src="{% static 'blog/img/books.mp4' %}" type="video/mp4">
+        </video>
+    </div>
+    <div class="header">
+        <h1 class="w-user"  id="welcomeMessage" style="margin-top: 200px;">Welcome Dear <span id="userName">{{ request.user }}</span> </h1>
+        <p style="text-align: center; color: #fff;">To Learnify - Your Study Posting Site<br><br>"Discover, share, and learn together on our innovative platform, where education<br>  meets collaboration for boundless growth."</p>
+        <div class="allbuttons" style="margin-top: 10px;">
+            <a href="{% url 'post' %}"><button>View Post Section</button></a>
+        </div>
+    </div>
+</section>
+
+<section class="sec2">
+ <div class="vision">
+    <h1 class="our_vission_hed">Our Vission</h1>
+    <hr id="hedhr">
+    <p>
+        At Knowledge Hub, our vision is to create an empowering online platform that revolutionizes the way knowledge is shared and connects learners worldwide. We aim to provide accessible and high-quality education, catering to diverse learning styles and backgrounds. Through our dynamic community, students, educators, and researchers can collaborate, exchange ideas, and foster meaningful learning partnerships. <br><br>
+
+        Our mission extends beyond traditional academia. We believe in lifelong learning and personal development, offering a wide range of courses and resources that enrich lives and empower individuals to grow continuously. By embracing innovative technologies like AI-driven personalized learning paths and virtual classrooms, we aim to provide an engaging and immersive learning experience. <br><br>
+
+        Integrity and trust are at the core of Knowledge Hub. We are committed to maintaining a secure and transparent platform, ensuring user privacy and upholding academic integrity. Through our global network of learners and educators, we envision making a positive impact on society, advancing knowledge, and driving positive change across diverse fields. <br><br>
+
+        Together, we aspire to create a brighter future where knowledge knows no boundaries, and learners of all ages thrive in a supportive and collaborative environment. Join us at Knowledge Hub and be a part of this exciting journey as we shape the way knowledge is shared and empower minds to reach new heights. Let's discover, learn, and grow together. Welcome to Knowledge Hub, where knowledge meets opportunity. <br><br>
+    </p>
+ </div>
+    </section>
+
+<style>
+    #hedhr{
+        margin: 0 auto;
+        width: 60px;
+        height: 8px;
+        background-color: rgb(17, 107, 143);
+        border: none;
+        border-radius: 20px;
+        margin-bottom: 15px;
+    }
+</style>
+{% include 'blog/footer.html' %}
+{% endblock %}
+

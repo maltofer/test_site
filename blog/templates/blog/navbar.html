@@ -1,0 +1,23 @@
+{% load static %}
+<header>
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+    </div>
+    <input type="checkbox" id="nav_check" hidden>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+        </div>
+        <ul>
+            <li><a href="{% url 'edit_profile' %}">Hello, {{request.user}} </a></li>
+            <li><a href="{% url 'post'%}">Posts</a></li>
+            <li><a href="{% url 'contact_us'%}">Contact Us</a></li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+        </ul>
+    </nav>
+    <label for="nav_check" class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </label>
+</header>

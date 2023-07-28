@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+{% block title %}Create a new post{% endblock %}
+{% block content %}
+
+<div class="wrapper" style="margin-top: 200px;">
+    <h1>Add post</h1>
+    <form action="" method="POST" enctype = "multipart/form-data">
+        {% csrf_token %}
+
+        <input type="text" name="{{ form.title.name }}" placeholder="Enter Title" id="{{ form.title.auto_id }}" {% if form.title.value %}value="{{ form.title.value }}"{% endif %} class="{{ form.title.css_classes }}" required>
+
+        <textarea name="{{ form.body.name }}" placeholder="Enter Body" id="{{ form.body.auto_id }}" class="{{ form.body.css_classes }}" required>{% if form.body.value %}{{ form.body.value }}{% endif %}</textarea>
+
+        <label for="{{ form.img.auto_id }}" class="custom-file-bu">
+            Choose File
+            <input type="file" name="{{ form.img.name }}" id="{{ form.img.auto_id }}" class="{{ form.img.css_classes }}" onchange="displayFileName()" required="false">
+        </label>
+        <span id="file-name-display"></span>
+        
+
+        <button type="submit" class="submit_btn">Post</button>
+    </form>
+</div>
+<script>
+    function displayFileName() {
+        const fileInput = document.getElementById('{{ form.img.auto_id }}');
+        const fileNameDisplay = document.getElementById('file-name-display');
+    
+        if (fileInput.files.length > 0) {
+            const fileName = fileInput.files[0].name;
+            fileNameDisplay.innerText = fileName;
+        } else {
+            fileNameDisplay.innerText = ''; // Hide the element when no file is selected
+        }
+    }
+    </script>
+    
+<style>
+    body{
+        background-color: #dfe9f5;
+    }
+    .file-name-display{
+        cursor: text;
+    }
+</style>
+{% endblock %}

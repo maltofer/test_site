@@ -1,0 +1,158 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ post.title_tag }}{% endblock %}
+{% block content %}
+{% load static %}
+
+<section id="blog">
+<!-- navbar -->
+<header>
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+    </div>
+    <input type="checkbox" id="nav_check" hidden>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+        </div>
+        <ul>
+            <li><a href="{% url 'home'%}">Home</a></li>
+            <li><a href="{% url 'add-post'%}">Post something</a></li>
+            <li><a href="{% url 'contact_us'%}">Contact Us</a></li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+        </ul>
+    </nav>
+    <label for="nav_check" class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </label>
+</header>
+<div class="terms" style="width: 100%; margin: 20px auto;">
+    {% for message in messages %}
+    <div class="messages">
+        <p>{{ message }}</p>
+    </div>
+    {% endfor %}
+</div>
+    <div class="blog_heading"><h1>{{ post.title }} </h1></div>
+
+    <div class="blog_box" style="width: 100%; margin-bottom: 150px;">
+        <div class="blog_text">
+            {% if post.author.first_name and post.author.last_name%}
+            <span style="margin-bottom: 10px;">
+                {% if post.author.profile.profile_pic %}
+                    <img src="{{ post.author.profile.profile_pic.url }}" style="width: 30px; border-radius: 50%; margin-bottom: -10px;"> 
+                {% else %}
+                    <img src="{% static 'blog/img/logo.png' %}" style="width: 30px; border-radius: 50%; margin-bottom: -10px;"> 
+                {% endif %}
+                by: <a href="{% url 'profile' post.author.profile.id %}">{{ post.author.first_name }} {{ post.author.last_name }}</a> as  ({{ post.author }}) - {{post.date_created}} - {{ total_likes }} Likes</span>
+            {% else %}
+            <span style="margin-bottom: 10px;">
+                {% if post.author.profile.profile_pic %}
+                    <img src="{{ post.author.profile.profile_pic.url }}" style="width: 30px; border-radius: 50%; margin-bottom: -10px;"> 
+                {% else %}
+                    <img src="{% static 'blog/img/user.png' %}" style="width: 30px; border-radius: 50%; margin-bottom: -10px;"> 
+                {% endif %}
+                by: <a href="{% url 'profile' post.author.profile.id %}">{{ post.author }}</a> - {{post.date_created}} - {{ total_likes }} Likes</span>
+            {% endif %}
+            {{ post.body }}
+        </div>
+        <div class="blog_img" style="height: 100%; width: 65%; margin: 0 auto;">
+            {% if post.img %}
+                <img src="{{ post.img.url }}">
+            {% endif %}
+        </div>
+        <form action="{% url 'like_post' post.pk %}" method="POST">
+            {% csrf_token %}
+            {% if liked %}
+             <button type="submit" value="{{ post.id }}" class="submit_btn" name="post_id" style="width: 10%;"><i class="fa-regular fa-thumbs-down"></i></button>
+            {% else %}
+             <button type="submit" value="{{ post.id }}" class="submit_btn" name="post_id" style="width: 10%;"><i class="fa-regular fa-thumbs-up"></i></button>
+            {% endif %}
+        </form>
+    </div>
+<div class="blog_box" style="width: 100%;margin-top: -70px;">
+    <div class="blog_heading" style="margin-top: 10px;;">
+        <h2>Comments...</h2>
+    </div>
+    <div class="blog_text">
+        {% if not post.commments.all %}
+            <p style="text-align: center;">No comments yet! Be the first to <a href="{% url 'comment' post.pk %}">comment</a> on this blog...😉️🤗</p>
+        {%else%}
+        <a href="{% url 'comment' post.pk %}" style="margin-bottom: 15px;">Add comments</a>
+            {% for comment in post.commments.all %}
+                <span>{{ comment.author }} - {{ comment.date_added }}</span>
+                <p style="margin-bottom: 20px;">{{ comment.body }}</p>
+            {% endfor %}    
+            
+        {%endif%}
+    </div>
+</div>
+</section>
+{% include 'blog/footer.html' %}
+    <!-- for styling -->
+    <style>
+        nav ul li a {
+        color: #000;
+        display: block;
+        margin: 0 2px;
+        font-weight: 600;
+        padding: 8px 18px;
+        transition: 0.2s;
+        border-radius: 30px;
+        list-style: none;
+        text-decoration: none;
+    }
+    .fa-thumbs-up,.fa-thumbs-down{
+        color: #000;
+        transition: 0.3s ease;
+        margin-bottom: 10px;
+        font-size: 1.9rem;
+    }
+    .fa-thumbs-up:hover{
+        transform: translateY(-5px);
+        color: rgb(17, 107, 143);
+    }
+    .fa-thumbs-down:hover{
+        transform: translateY(5px);
+        color: rgb(17, 107, 143);
+    }
+    nav ul li a:hover {
+        background: rgb(17, 107, 143);
+        color: #fff;
+    }
+    .hamburger div {
+        width: 30px;
+        height: 2px;
+        margin: 6px 0;
+        background: #000;
+    }
+    @media(max-width:1250px){
+    .blog_img{
+       min-width: 100%;
+        margin: 0;
+    }
+    .fa-thumbs-up,.fa-thumbs-down{
+        font-size: 1.5rem;
+    }
+
+}
+@media(max-width:600px){
+    .blog_img{
+        min-width: 100%;
+        margin: 0;
+    }
+    .fa-thumbs-up,.fa-thumbs-down{
+        font-size: 1.5rem;
+    }
+}
+.submit_btn{
+    background-color: transparent;
+}
+.submit_btn:hover{
+    background: #fff;
+}
+    </style>
+{% endblock %}
+
+

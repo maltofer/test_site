@@ -1,0 +1,104 @@
+{% extends 'blog/base.html' %}
+{% block title %}Comments - Learnify{% endblock %}
+{% block content %}
+{% load static %}
+<header>
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+    </div>
+    <input type="checkbox" id="nav_check" hidden>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+        </div>
+        <ul>
+            <li><a href="{% url 'home'%}">Home</a></li>
+            <li><a href="{% url 'add-post'%}">Post something</a></li>
+            <li><a href="{% url 'contact_us'%}">Contact Us</a></li>
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+        </ul>
+    </nav>
+    <label for="nav_check" class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </label>
+</header>
+<div class="height_adj" style=" height: 65vh;">
+    <div class="blog_heading" style="margin-bottom: -90px; margin-top: 20px;"><h3>Add comment <span style="color: rgb(17, 107, 143);">{{request.user}}</span></h3></div>
+<div class="wrapper">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" id="submit">Add Comment</button>
+    </form>
+</div>
+</div>
+{% include 'blog/footer.html' %}
+<style>
+    .blog_heading h3{
+        font-size: 35px;
+    }
+    .wrapper{
+        width: 40%;
+        margin-top: 110px;
+    }
+     @media(max-width:600px){
+    .wrapper{
+       min-width: 90%;
+       margin-bottom: 50px;
+       margin-top: 120px;
+    }
+    .blog_heading h3{
+        font-size: 30px;
+    }
+}
+    .wrapper form textarea{
+    width: 92%;
+    outline: none;
+    border: 1px solid #fff;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    background: #e4e4e4;
+    height: 120px
+}
+.hamburger div {
+        width: 30px;
+        height: 2px;
+        margin: 6px 0;
+        background: #000;
+    }
+    nav ul li a:hover {
+        background: rgb(17, 107, 143);
+        color: #fff;
+    }
+        nav ul li a {
+        color: #000;
+        display: block;
+        margin: 0 2px;
+        font-weight: 600;
+        padding: 8px 18px;
+        transition: 0.2s;
+        border-radius: 30px;
+        list-style: none;
+        text-decoration: none;
+    }
+    #submit{
+    font-size: 1rem;
+    margin-top: 1.2rem;
+    padding: 10px 0;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    width: 90%;
+    background: rgb(17, 107, 143);
+    color: #fff;
+    transition: 0.3s ease;
+}
+#submit:hover{
+  background: rgba(17, 107, 143, 0.877);
+  transform: scale(1.1);
+}
+</style>
+{% endblock %}

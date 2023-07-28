@@ -1,0 +1,257 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+{% if page_user.user.first_name and page_user.user.last_name %}
+  {{ page_user.user.first_name }} {{ page_user.user.last_name }} - Learnify
+{% else %}
+  {{ page_user }} - Learnify
+{% endif %}
+{% endblock %}
+{% block content %}
+{% load static %}
+<header>
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+    </div>
+    <input type="checkbox" id="nav_check" hidden>
+    <nav>
+        <div class="logo">
+            <a href="{% url 'home' %}"><img src="{% static 'blog/img/logo.png' %}" style="width: 60px;"></a>
+        </div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'post'%}">Posts</a></li>
+            <li><a href="{% url 'contact_us'%}">Contact Us</a></li>            
+            <li><a href="{% url 'logout'%}">Logout</a></li>
+        </ul>
+    </nav>
+    <label for="nav_check" class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </label>
+</header>
+<section id="blog" style="margin-top: 10px;">
+    <div class="blog_heading">
+     <h1 style="font-size: 40px;;"><span style="color: rgb(17, 107, 143);">{{ page_user }}'s</span> Profile</h1>
+    </div>
+    
+    <div class="blog_box">
+        <div class="blog_pro_imgs">
+            {% if page_user.profile_pic %}
+            <img src="{{ page_user.profile_pic.url }}"> 
+            {% else %}
+            <img src="{% static 'blog/img/user.jpg' %}"> 
+            {% endif %}
+        </div>
+        <div class="blog_text">
+            {% if page_user.user.first_name %}
+            <p style="text-align: left">Name:&nbsp;&nbsp;{{ page_user.user.first_name }} {{ page_user.user.last_name }}</p>
+            {% endif %}
+            {% if page_user.user.email %}
+            <p style=" text-align: left">Email:&nbsp;&nbsp;{{ page_user.user.email }}</p>
+            {% endif %}
+            {% if page_user.location %}
+            <p style=" text-align: left">Lived at:&nbsp;&nbsp;{{ page_user.location }}</p>
+            {% endif %}
+            {% if page_user.education %}
+            <p style=" text-align: left">Education:&nbsp;&nbsp;{{ page_user.education }}</p>
+            {% endif %}
+            {% if page_user.bio %}
+            <p style=" text-align: left">Bio:&nbsp;&nbsp;{{ page_user.bio }}</p>
+            {% endif %}
+            <div class="social-icons">
+                {% if page_user.website_url %}
+                <a href="{{ page_user.website_url }}"><i class="fa-solid fa-user"></i></a>
+                {% endif %}
+
+                {% if page_user.facebook_url %}
+                <a href="{{ page_user.facebook_url }}"><i class="fa-brands fa-facebook"></i></a>
+                {% endif %}
+
+                {% if page_user.twitter_url %}
+                <a href="{{ page_user.twitter_url }}"><i class="fa-brands fa-youtube"></i></a>
+                {% endif %}
+
+                {% if page_user.instagram_url %}
+                <a href="{{ page_user.instagram_url }}"><i class="fa-brands fa-instagram"></i></a>
+                {% endif %}
+
+                {% if page_user.pintrest_url %}
+                <a href="{{ page_user.pintrest_url }}"><i class="fa-brands fa-twitter"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <style>
+      /* Custom CSS to stack divs vertically */
+      .blog_boxs {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border: 1px solid #ececec;
+      }
+  
+      .blog_text{
+          width: 100%;
+          margin-bottom: 20px; /* Add some space between each post */
+      }
+      .blog_img {
+        width: 50%;
+        height: 20%;
+        margin: 30px auto;
+        text-align: center;
+      }
+      @media screen and (max-width: 768px) {
+        .blog_img{
+          width: 380px;
+        }
+      }
+  </style>
+ <div class="blog_heading" style="margin-bottom: 10px;;"><h1>All Posts</h1></div>
+  <div class="blog_boxs" style="width: 100%; margin-bottom: 150px; height: auto; overflow-y: auto;">
+      {% if posts %}
+          {% for post in posts %}
+              <div class="blog_text">
+                  <h2>{{ post.title }}</h2>
+                  <p>{{ post.body }}</p>
+              </div>
+              <div class="blog_img">
+                  {% if post.img %}
+                      <img src="{{ post.img.url }}">
+                  {% endif %}
+              </div>
+          {% endfor %}
+      {% else %}
+          <div class="blog_text">
+              <p>No posts available for this user.</p>
+          </div>
+      {% endif %}
+  </div>
+  
+  
+</section>
+{% include 'blog/footer.html' %}
+<style>
+  #blog{
+    height: auto;
+  }
+/* Style the social icons */
+.social-icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.social-icons a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: rgb(17, 107, 143);
+  border-radius: 50%;
+  margin-right: 10px;
+  color: #fff;
+  margin-top: 30px;
+  font-size: 18px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+/* Add hover effect to the icons */
+.social-icons a:hover {
+  color: #004c99;
+  background-color: #fff;
+  transform: translateY(-5px);
+}
+
+nav ul li a {
+color: #000;
+display: block;
+margin: 0 2px;
+font-weight: 600;
+padding: 8px 18px;
+transition: 0.2s;
+border-radius: 30px;
+list-style: none;
+text-decoration: none;
+}
+nav ul li a:hover {
+background: rgb(17, 107, 143);
+color: #fff;
+}
+/* Container for the entire profile box */
+.blog_box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 40vh;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Container for the profile image */
+.blog_pro_imgs {
+  flex: 0 0 180px;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.blog_pro_imgs img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+/* Container for the profile text */
+.blog_text {
+  flex: 1;
+}
+
+/* Style for the profile text content */
+.blog_text p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.blog_text .a_tags {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.hamburger div {
+        width: 30px;
+        height: 2px;
+        margin: 6px 0;
+        background: #000;
+    }
+/* Media query for responsiveness */
+@media screen and (max-width: 768px) {
+  .blog_box {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    margin-top: 30px;
+  }
+
+  .blog_pro_imgs {
+    flex: 0 0 100%;
+    width: 80px;
+    margin: -50px auto;
+  }
+
+  .blog_text {
+    flex: 1;
+    margin-top: 20px;
+  }
+}
+
+
+</style>
+{% endblock %}

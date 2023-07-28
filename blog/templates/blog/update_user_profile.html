@@ -1,0 +1,86 @@
+{% extends 'blog/base.html' %}
+{% block title %}Edit your Profile Page{% endblock %}
+{% block content %}
+{% load static %}
+<div class="blog_heading" style="margin-top: 30px; margin-bottom: -100px;">
+<h3>Update your Profile Page <span style="color: rgb(17, 107, 143);">{{ request.user }}</span></h3>
+</div>
+<div class="wrapper" style="width: 60%; margin-top: 200px;">
+    {% if user.profile.profile_pic %}
+    <img src="{{ user.profile.profile_pic.url }}" style="border-radius: 50%; width:200px; margin-top: -100px; margin-bottom: 20px;"> 
+{% else %}
+    <img src="{% static 'blog/img/user.jpg' %}" style="border-radius: 50%; width:200px; margin-top: -100px; margin-bottom: 20px;"> 
+{% endif %}
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.profile_pic.label }}:
+            {{ form.profile_pic }}
+
+            {{ form.website_url.label }}:
+            {{ form.website_url }}
+
+            {{ form.facebook_url.label }}:
+            {{ form.facebook_url }}
+
+            <br>
+
+            {{ form.twitter_url.label }}:
+            {{ form.twitter_url }}
+
+            {{ form.instagram_url.label }}:
+            {{ form.instagram_url }}
+
+            {{ form.pintrest_url.label }}:
+            {{ form.pintrest_url }}
+
+            {{ form.location.label }}:
+            {{ form.location }}
+
+            {{ form.education.label }}:
+            {{ form.education }}
+
+            <br>
+
+            {{ form.bio.label }}:<br>
+            {{ form.bio }}
+            <button type="submit" id="submit">Done</button>
+        </form>
+</div>
+<style>
+    .wrapper{
+  margin-top:120px;
+  width: 450px;
+}
+.wrapper input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#submit{
+    font-size: 1rem;
+    margin-top: 1.2rem;
+    padding: 10px 0;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    width: 90%;
+    background: rgb(17, 107, 143);
+    color: #fff;
+    transition: 0.3s ease;
+}
+#submit:hover{
+  background: rgba(17, 107, 143, 0.877);
+  transform: scale(1.1);
+}
+
+@media(max-width:600px){
+    .blog_heading h3{
+        font-size: 25px;
+        font-weight: 700;
+    }
+    .wrapper{
+        min-width: 90%;
+    }
+}
+</style>
+{% endblock %}

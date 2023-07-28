@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/main.css' %}">
+    <title>Login - Learnify</title>
+</head>
+<body>
+
+    {% block content %}
+      <div class="wrapper">
+        <h1>Log in to continue</h1>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="Username">
+          <input type="password" name="password" placeholder="Password">
+          <button type="submit" id="submit">Login</button>
+          <div class="member">Dont have a account <a href="{% url 'register'%}" class="login_going">Create here !!</a></div>
+      </form>
+      <div class="terms">
+          {% for message in messages %}
+            <div class="messages">
+              <p>{{ message }}</p>
+            </div>
+          {% endfor %}
+      </div>
+      </div>
+    {% endblock %}
+
+    <!-- style only for login -->
+<style>
+  body{
+    background-color: #dfe9f5;
+  }
+  #submit{
+    font-size: 1rem;
+    margin-top: 1.2rem;
+    padding: 10px 0;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    width: 90%;
+    background: rgb(17, 107, 143);
+    color: #fff;
+    transition: 0.3s ease;
+}
+#submit:hover{
+  background: rgba(17, 107, 143, 0.877);
+  transform: scale(1.1);
+}
+
+input:focus{
+  border: 1px solid rgb(192, 192, 192);
+}
+.wrapper{
+  margin-top: 200px;
+  width: 420px;
+}
+.member{
+    font-size: 0.8rem;
+    margin-top: 1.4rem;
+    color: #636363;
+}
+.member a{
+    color: rgb(17, 107, 143);
+    text-decoration: none;
+}
+.messages{
+    margin-top: 20px;
+}
+</style>
+
+</body>
+</html>
+
+
+
+ 
+

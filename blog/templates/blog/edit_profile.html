@@ -1,0 +1,58 @@
+{% extends 'blog/base.html' %}
+{% block title %}Edit your Profile{% endblock %}
+{% block content %}
+{% load static %}
+<div class="blog_heading" style="margin-top: 65px; margin-bottom: -100px;">
+<h1>Edit your Profile <span style="color: rgb(17, 107, 143);">{{ request.user }}</span></h1>
+</div>
+<div class="wrapper">
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.username.label}}:
+            {{ form.username }}
+            
+            {{ form.email.label}}:
+            {{ form.email}}
+
+            {{ form.first_name.label}}:
+            {{ form.first_name}}
+          
+            {{ form.last_name.label}}:
+            {{ form.last_name}}
+            <br>
+            {{ form.bio.label}}:
+            <br>
+            {{ form.bio }}
+
+            <button type="submit" id="submit">Done</button>
+        </form>
+        <a href="{% url 'update_profile' user.profile.id %}"><button id="submit">Update your profile page</button></a>
+</div>
+<style>
+    .wrapper{
+  margin-top:120px;
+  width: 450px;
+}
+.wrapper input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#submit{
+    font-size: 1rem;
+    margin-top: 1.2rem;
+    padding: 10px 0;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    width: 90%;
+    background: rgb(17, 107, 143);
+    color: #fff;
+    transition: 0.3s ease;
+}
+#submit:hover{
+  background: rgba(17, 107, 143, 0.877);
+  transform: scale(1.1);
+}
+</style>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'blog/base.html' %}
+{% block title %}Contact Us - Learnify{% endblock %}
+{% block content %}
+{% load static %}
+<div class="wrapper">
+    <h1>Contact Us</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" name="name" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
+        <br>
+        <label for="message">Message:</label>
+        <textarea name="message" required></textarea>
+        <br>
+        <button type="submit" id="submit">Submit</button>
+    </form>
+</div>
+<style>
+    .wrapper{
+        width: 500px; 
+        margin-top: 110px;
+    }
+    #submit{
+    font-size: 1rem;
+    margin-top: 1.2rem;
+    padding: 10px 0;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    width: 90%;
+    background: rgb(17, 107, 143);
+    color: #fff;
+    transition: 0.3s ease;
+}
+#submit:hover{
+  background: rgba(17, 107, 143, 0.877);
+  transform: scale(1.1);
+}
+@media (max-width: 574px) {
+    .wrapper {
+        width: 80%;
+        margin-top: 130px;
+    }
+}
+</style>
+{%endblock%}

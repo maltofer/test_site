@@ -1,0 +1,54 @@
+{% extends 'blog/base.html' %}
+{% block title %}Contact Us - Learnify{% endblock %}
+{% block content %}
+{% load static %}
+<div class="success">
+    <img src="{% static 'blog/img/green_tik.png' %}">
+    <h1>Thank You, {{ name }} for contacting us!</h1>
+    <p>We have received your message and will get back to you soon.</p>
+    <a href="{% url 'home' %}"><button id="submit">Back to home</button></a>
+</div>
+<style>
+    .success{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 150px auto;
+    }
+    .success img{
+        width: 20%;
+    }
+    #submit{
+    font-size: 1rem;
+    margin-top: 1.2rem;
+    padding: 10px 0;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    min-width: 400px;
+    background: rgb(17, 107, 143);
+    color: #fff;
+    transition: 0.3s ease;
+    margin-bottom: 50px;
+}
+#submit:hover{
+  background: rgba(17, 107, 143, 0.877);
+  transform: scale(1.1);
+}
+@media (max-width: 574px) {
+    .success {
+        width: 90%;
+        margin-top: 110px;
+    }
+    .success img{
+        width: 50%;
+    }
+    #submit {
+        width: 80%; /* Adjust the button width for small screens */
+    }
+}
+</style>
+{%endblock%}
